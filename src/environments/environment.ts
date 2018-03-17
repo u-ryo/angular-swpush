@@ -4,5 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  config: {
+    "API_URL": "http://localhost:4567",
+    "VAPID_PUBLIC_KEY": "BKBYPoDMjqxh2AIVoAPm66EYdVGLp0p9dN5Xa0KKqfF-oM3EgFk4Jf_pdnPNopL2HPbxrTViKUH7Lea-VbwxyZA"
+  }
 };
