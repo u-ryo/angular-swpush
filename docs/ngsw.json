@@ -10,7 +10,7 @@
         "/angular-swpush/favicon.ico",
         "/angular-swpush/index.html",
         "/angular-swpush/inline.318b50c57b4eba3d437b.bundle.js",
-        "/angular-swpush/main.bd5c3ca4ecb3a242733f.bundle.js",
+        "/angular-swpush/main.bc7f891bee69e885242c.bundle.js",
         "/angular-swpush/polyfills.bf95165a1d5098766b92.bundle.js",
         "/angular-swpush/styles.ac89bfdd6de82636b768.bundle.css"
       ],
@@ -27,10 +27,10 @@
   "dataGroups": [],
   "hashTable": {
     "/angular-swpush/inline.318b50c57b4eba3d437b.bundle.js": "998c6060446975e566fd17509558ddc68d72eec3",
-    "/angular-swpush/main.bd5c3ca4ecb3a242733f.bundle.js": "9466cbca8083958591760db41c7996b58e56231f",
+    "/angular-swpush/main.bc7f891bee69e885242c.bundle.js": "43b7f75639935564568c686d5f40adcd3525727f",
     "/angular-swpush/polyfills.bf95165a1d5098766b92.bundle.js": "5f49131c0c147a20f91b1e77814434e0c77bd3dc",
     "/angular-swpush/styles.ac89bfdd6de82636b768.bundle.css": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
     "/angular-swpush/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/angular-swpush/index.html": "00f2fbe1cc02f19d0150731434a59483a43662ee"
+    "/angular-swpush/index.html": "c99545051371409e36f7f732db20447b34c78ccb"
   }
 }
