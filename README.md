@@ -41,7 +41,20 @@ $ curl http://localhost:4567/push --data \
   }'
 ```
 
-### notification click
+You can also try:
+
+1. Download [webpush.groovy server](https://raw.githubusercontent.com/u-ryo/angular-swpush/master/webpush.groovy)
+1. Execute the server by `groovy webpush.groovy` (with groovy 2.5+) or `groovy -cp /usr/share/java/servlet-api-3.1.jar webpush.groovy` (with groovy 2.4-)
+1. Open https://u-ryo.github.io/angular-swpush/ by Chrome (Firefox will fail because of the mixed content)
+1. Push "Subscribe for push" button and accept the notification
+1. Execute `curl` command like below:
+```
+curl http://localhost:4567/push --data '{"notification":{"body":"This is a message.","title":"PUSH MESSAGE","vibrate":[300,100,400,100,400,100,400],"icon":"https://upload.wikimedia.org/wikipedia/en/thumb/3/34/AlthepalHappyface.svg/256px-AlthepalHappyface.svg.png","tag":"push demo","requireInteraction":true,"renotify":true,"data":{"url":"https://maps.google.com"}}}'
+```
+1. You'll see the notification
+1. If you click the notification, you'll see the Google Map
+
+## notification click
 
 If you want to respond "notificationclick" event
 (=> when you click the notification,
