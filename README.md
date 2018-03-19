@@ -1,27 +1,82 @@
 # AngularSwpush
 
+This is just a test application for the web push notification using the service worker on angular5.
+
+I refered to [pwatter(A simple app for the PWA Workshop)](https://github.com/webmaxru/pwatter).
+I traced that on the latest Angular5 by my hand.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Trying the service worker, you need to build the app as the production mode.
+`ng serve` won't work.
 
-## Code scaffolding
+So I added a push server written by groovy(2.5+).
+Please try,
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+$ ng build --prod
+$ groovy webpush.groovy
+```
 
-## Build
+(If your groovy version is under 2.5, you'll need `-cp /usr/share/java/servlet-api-3.1.jar` because [SparkJava](http://sparkjava.com) needs a newer servlet-api than the one included in groovy2.4-)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+And access to `http://localhost:4567/` by your browser(Chrome or Firefox or Opera? or...),
+push the button 'Subscribe for push' and accept the notification.
+To send a push notification, please use `curl` on the command line like below:
 
-## Running unit tests
+```
+$ curl http://localhost:4567/push --data \
+  '{"notification":
+    {
+      "title":"PUSH MESSAGE",
+      "body":"This is a message.",
+      "vibrate":[300,100,400,100,400,100,400],
+      "icon":"https://upload.wikimedia.org/wikipedia/en/thumb/3/34/AlthepalHappyface.svg/256px-AlthepalHappyface.svg.png",
+      "tag":"push demo",
+      "requireInteraction":true,
+      "renotify":true
+    }
+  }'
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### notification click
 
-## Running end-to-end tests
+If you want to respond "notificationclick" event
+(=> when you click the notification,
+the browser will pop up and open the specified URL),
+add the codes below to `ngsw-worker.js` around the line `this.scope.addEventListener('push', (event) => this.onPush(event));`(Line 1775).
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```
+      this.scope.addEventListener('notificationclick', (event) => {
+        console.log('[Service Worker] Notification click Received.', event);
+        event.notification.close();
+        if (clients.openWindow && event.notification.data.url) {
+          event.waitUntil(clients.openWindow(event.notification.data.url));
+        }
+      });
+```
 
-## Further help
+(If you add the code to `node_modules/@angular/service-worker/ngsw-worker.js`,
+you'll need to `ng build` again.)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Then you can specify the URL in the "notification.data.url".
+
+```
+$ curl http://localhost:4567/push --data \
+  '{"notification":
+    {
+      "body":"This is a message.",
+      "title":"PUSH MESSAGE",
+      "vibrate":[300,100,400,100,400,100,400],
+      "icon":"https://upload.wikimedia.org/wikipedia/en/thumb/3/34/AlthepalHappyface.svg/256px-AlthepalHappyface.svg.png",
+      "tag":"push demo",
+      "requireInteraction":true,
+      "renotify":true,
+      "data":{"url":"https://maps.google.com"}
+    }
+  }'
+```
+
+When you click the notification, Google Map will appear.
