@@ -63,7 +63,7 @@ add the codes below to `ngsw-worker.js` around the line `this.scope.addEventList
 
 ```
       this.scope.addEventListener('notificationclick', (event) => {
-        console.log('[Service Worker] Notification click Received.', event);
+        console.log('[Service Worker] Notification click Received. event:%s', event);
         event.notification.close();
         if (clients.openWindow && event.notification.data.url) {
           event.waitUntil(clients.openWindow(event.notification.data.url));
