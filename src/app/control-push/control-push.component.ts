@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { ConfigService } from './../config.service';
 import { PushService } from './../push.service';
 import { SwPush } from '@angular/service-worker';
