@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { environment } from './../environments/environment';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class ConfigService {
-  private _config:any = environment.config;
+  private _config: any = environment.config;
 
   constructor() {}
 

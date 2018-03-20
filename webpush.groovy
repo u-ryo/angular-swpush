@@ -43,16 +43,33 @@ options('/subscribe', { req, res ->
   ''
         })
 post('/subscribe', { req, res ->
-  log.info('request body:{}', req.body())
-  subscription = new JsonSlurper().parseText(req.body()).subscription
+  log.info('/subscribe request body:{}', req.body())
+  subscription = new JsonSlurper().parseText(req.body())
   log.info('endpoint:{},key:{},auth:{}',
            subscription.endpoint, subscription.keys.p256dh,
            subscription.keys.auth)
   res.header('Access-Control-Allow-Origin', '*')
   res.status(204)
-  'OK'
+  ''
+     })
+post('/unsubscribe', { req, res ->
+  log.info('/unsubscribe request body:{}', req.body())
+  if (subscription != null) {
+    log.info('endpoint:{},key:{},auth:{}',
+             subscription.endpoint, subscription.keys.p256dh,
+             subscription.keys.auth)
+  }
+  subscription = null
+  res.header('Access-Control-Allow-Origin', '*')
+  res.status(204)
+  ''
      })
 post('/push', { req, res ->
+  log.info('/push request body:{}', req.body())
+  if (subscription == null) {
+    res.status(404)
+    return 'No subscription'
+  }
   response = push.send(
     new Notification(subscription.endpoint, subscription.keys.p256dh,
                      subscription.keys.auth,
